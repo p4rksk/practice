@@ -27,4 +27,23 @@ public class BoardRepository { //dao
 
                 query.executeUpdate();
     }
+
+    public Board findByNo(int no){
+        Query query = em.createNativeQuery("select * from board_tb where no = ?", Board.class);
+        query.setParameter(1,no);
+
+        Board board = (Board) query.getSingleResult();
+        return board;
+
+    }
+    @Transactional
+    public void update(BoardRequest.UpdateDTO requestDTO, int no) {
+        Query query = em.createNativeQuery("update board_tb set title=?, content=?, author = ? where no = ?");
+        query.setParameter(1, requestDTO.getTitle());
+        query.setParameter(2, requestDTO.getContent());
+        query.setParameter(3, requestDTO.getAuthor());
+        query.setParameter(4, no);
+
+        query.executeUpdate();
+    }
 }

@@ -28,8 +28,19 @@ public class BoardController {
         return "board/saveForm";
     }
 
-    @GetMapping("/board/{id}/updateForm")
-    public String updateForm(@PathVariable int id) {
+    @GetMapping("/board/{no}/updateForm")
+    public String updateForm(@PathVariable int no, HttpServletRequest request) {
+        Board board = boardRepository.findByNo(no);
+        if (board.getTitle().length()>20){
+            return "error/40x";
+        }
+
+        if (board.getContent().length()>20){
+            return "error/40x";
+        }
+
+        //가방에 담기
+        request.setAttribute("board",board);
         return "board/updateForm";
     }
 
@@ -60,8 +71,14 @@ public class BoardController {
         return "redirect:/";
     }
 
-    @PostMapping("/board/{id}/update")
-    public String update(@PathVariable int id){
+    @PostMapping("/board/{no}/update")
+    public String update(@PathVariable int no, BoardRequest.UpdateDTO requestDTO){
+        System.out.println("!11");
+
+
+        boardRepository.update(requestDTO, no);
+        System.out.println("2222222");
+
         return "redirect:/";
     }
 

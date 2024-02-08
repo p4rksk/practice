@@ -22,9 +22,4 @@ public class Board {
     private String content;
 
     private String author;
-
-    private LocalDateTime createdAt;
-
-
-
 }
