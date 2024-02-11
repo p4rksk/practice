@@ -19,12 +19,4 @@ public class BoardRequest { //=DTO
         private String content;
     }
 
-    @Data
-    public static class DeleteDTO{
-        private String author;
-        private String title;
-        private String content;
-        private int no;
-
-    }
 }
