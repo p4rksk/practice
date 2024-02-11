@@ -13,9 +13,26 @@ import java.util.List;
 public class BoardRepository { //dao
     private final EntityManager em;
 
-    public List<Board> findAll(){
-        Query query = em.createNativeQuery("select * from board_tb order by no desc", Board.class);
-        return query.getResultList();
+    public List<Board> findAll(int page){
+        final int count =5;
+        int value = page * 5;
+        //value는 페이지 번호에 따라 가져올 데이터의 시작 인덱스를 계산하는 방식
+
+        Query query = em.createNativeQuery("select * from board_tb order by no desc limit ?,?", Board.class);
+        query.setParameter(1,value);
+        query.setParameter(2,count);
+
+        List<Board> boardList = query.getResultList();
+        return boardList;
+    }
+
+    public int count() {
+        Query query = em.createNativeQuery("select count(*) from board_tb");
+
+        Long count = (Long) query.getSingleResult(); //integer를 넣을 경우 터짐 그래서 Long을 사용함
+
+        return count.intValue();//Long 타입을 int 타입으로 형변환 해주는 메서드
+
     }
 
     @Transactional
