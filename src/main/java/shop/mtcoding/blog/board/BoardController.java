@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,6 +37,13 @@ public class BoardController {
             totalPage = 1 + (totalCount / paging);
 
         }
+
+        ArrayList pageIndex = new ArrayList<>();
+        for (int i =0; i< totalPage; i++) {
+            pageIndex.add(i);
+        }
+        request.setAttribute("pageIndex",pageIndex);
+
         boolean last = currentPage ==(totalPage -1) ?true : false;
 
         request.setAttribute("first",first);
